@@ -12,7 +12,7 @@
 #include "lfn.h"
 #include <commctrl.h>
 #include <shlobj.h>
-
+#include "dpi.h"
 //
 // Overall Window structure
 //
@@ -34,6 +34,8 @@
 //
 // prototypes
 //
+
+
 BOOL EnablePropertiesMenu(HWND hwnd, LPWSTR pszSel);
 BOOL bDialogMessage(PMSG pMsg);
 
@@ -48,6 +50,7 @@ WinMain(
 {
    MSG       msg;
    LPWSTR    pszCmdLine;
+   DPIAwarenessPrologue();
 
 #ifdef HEAPCHECK
    HeapCheckInit();
