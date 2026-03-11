@@ -66,6 +66,7 @@
     <ClInclude Include="res.h" />
     <ClInclude Include="resize.h" />
     <ClInclude Include="dpi.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="res.rc" />
@@ -152,10 +153,30 @@
     <None Include="lang\res_ko-KR.rc">
       <Filter>lang</Filter>
     </None>
+    <None Include="split.cur" />
+    <None Include="smove.cur" />
+    <None Include="mmove.cur" />
+    <None Include="scopy.cur" />
+    <None Include="mcopy.cur" />
+    <None Include="slink.cur" />
+    <None Include="mlink.cur" />
+    <None Include="shard.cur" />
+    <None Include="mhard.cur" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="lang">
       <UniqueIdentifier>{a74d83f3-58ec-46d3-bb3d-fadca6ac5743}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="wbbitmap.bmp" />
+    <Image Include="toolbar.bmp" />
+    <Image Include="xtratool.bmp" />
+    <Image Include="winfile.ico" />
+    <Image Include="wftree.ico" />
+    <Image Include="wfdir.ico" />
+    <Image Include="wftrdir.ico" />
+    <Image Include="bitmap1.bmp" />
+    <Image Include="bitmap.bmp" />
   </ItemGroup>
 </Project>

@@ -163,6 +163,7 @@
     <ClInclude Include="numfmt.h" />
     <ClInclude Include="res.h" />
     <ClInclude Include="resize.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="spinlock.h" />
     <ClInclude Include="suggest.h" />
     <ClInclude Include="treectl.h" />
@@ -184,6 +185,15 @@
     <None Include="lang\res_pl-PL.rc" />
     <None Include="lang\res_de-DE.rc" />
     <None Include="lang\res_tr-TR.rc" />
+    <None Include="mcopy.cur" />
+    <None Include="mhard.cur" />
+    <None Include="mlink.cur" />
+    <None Include="mmove.cur" />
+    <None Include="scopy.cur" />
+    <None Include="shard.cur" />
+    <None Include="slink.cur" />
+    <None Include="smove.cur" />
+    <None Include="split.cur" />
     <ResourceCompile Include="res.rc">
       <Culture>0x0409</Culture>
       <ShowProgress Condition="'$(Configuration)'=='Debug'">true</ShowProgress>
@@ -260,6 +270,17 @@
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="winfile.exe.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="bitmap.bmp" />
+    <Image Include="bitmap1.bmp" />
+    <Image Include="toolbar.bmp" />
+    <Image Include="wbbitmap.bmp" />
+    <Image Include="wfdir.ico" />
+    <Image Include="wftrdir.ico" />
+    <Image Include="wftree.ico" />
+    <Image Include="winfile.ico" />
+    <Image Include="xtratool.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 </Project>
