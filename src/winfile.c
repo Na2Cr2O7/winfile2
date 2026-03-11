@@ -35,6 +35,9 @@
 // prototypes
 //
 
+#ifdef __cplusplus
+extern "C"{
+#endif // __cplusplus
 
 BOOL EnablePropertiesMenu(HWND hwnd, LPWSTR pszSel);
 BOOL bDialogMessage(PMSG pMsg);
@@ -1317,3 +1320,6 @@ bDialogMessage(PMSG pMsg)
    return FALSE;
 }
 
+#ifdef __cplusplus
+}
+#endif // __cplusplus
