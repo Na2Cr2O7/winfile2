@@ -79,7 +79,31 @@ static TBBUTTON tbButtons[] = {
    //{27, IDM_PERMISSIONS, TBSTATE_ENABLED, TBSTYLE_BUTTON, 0 },
 };
 //static TBBUTTON tbButtons[] = { {13, IDM_DELETE     , TBSTATE_ENABLED, TBSTYLE_BUTTON, 0 } };
-
+    // 注意：必须使用宽字符串 (L"...")
+static TBBUTTON tbButtons0[] = {
+    { I_IMAGENONE, 0,              TBSTATE_ENABLED, TBSTYLE_SEP,   {0}, 0, (INT_PTR)L"" },
+    { I_IMAGENONE, IDM_CONNECTIONS, TBSTATE_ENABLED, BTNS_BUTTON,  {0}, 0, (INT_PTR)L"1" },
+    { I_IMAGENONE, IDM_DISCONNECT,  TBSTATE_ENABLED, BTNS_BUTTON,  {0}, 0, (INT_PTR)L"2" },
+    { I_IMAGENONE, 0,              TBSTATE_ENABLED, TBSTYLE_SEP,   {0}, 0, (INT_PTR)L"" },
+    { I_IMAGENONE, IDM_SHAREAS,     TBSTATE_ENABLED, BTNS_BUTTON,  {0}, 0, (INT_PTR)L"3" },
+    // IDM_STOPSHARE 被注释掉，保持一致
+    { I_IMAGENONE, 0,              TBSTATE_ENABLED, TBSTYLE_SEP,   {0}, 0, (INT_PTR)L"" },
+    { I_IMAGENONE, IDM_VNAME,       TBSTATE_ENABLED, BTNS_BUTTON,  {0}, 0, (INT_PTR)L"4" },
+    { I_IMAGENONE, IDM_VDETAILS,    TBSTATE_ENABLED, BTNS_BUTTON,  {0}, 0, (INT_PTR)L"5" },
+    { I_IMAGENONE, 0,              TBSTATE_ENABLED, TBSTYLE_SEP,   {0}, 0, (INT_PTR)L"" },
+    { I_IMAGENONE, IDM_BYNAME,      TBSTATE_ENABLED, BTNS_BUTTON,  {0}, 0, (INT_PTR)L"6" },
+    { I_IMAGENONE, IDM_BYTYPE,      TBSTATE_ENABLED, BTNS_BUTTON,  {0}, 0, (INT_PTR)L"7" },
+    { I_IMAGENONE, IDM_BYSIZE,      TBSTATE_ENABLED, BTNS_BUTTON,  {0}, 0, (INT_PTR)L"8" },
+    { I_IMAGENONE, IDM_BYDATE,      TBSTATE_ENABLED, BTNS_BUTTON,  {0}, 0, (INT_PTR)L"9" },
+    { I_IMAGENONE, IDM_BYFDATE,     TBSTATE_ENABLED, BTNS_BUTTON,  {0}, 0, (INT_PTR)L"10" },
+    { I_IMAGENONE, 0,              TBSTATE_ENABLED, TBSTYLE_SEP,   {0}, 0, (INT_PTR)L"" },
+    { I_IMAGENONE, IDM_NEWWINDOW,   TBSTATE_ENABLED, BTNS_BUTTON,  {0}, 0, (INT_PTR)L"11" },
+    { I_IMAGENONE, 0,              TBSTATE_ENABLED, TBSTYLE_SEP,   {0}, 0, (INT_PTR)L"" },
+    { I_IMAGENONE, IDM_COPY,        TBSTATE_ENABLED, BTNS_BUTTON,  {0}, 0, (INT_PTR)L"12" },
+    { I_IMAGENONE, IDM_MOVE,        TBSTATE_ENABLED, BTNS_BUTTON,  {0}, 0, (INT_PTR)L"13" },
+    { I_IMAGENONE, IDM_DELETE,      TBSTATE_ENABLED, BTNS_BUTTON,  {0}, 0, (INT_PTR)L"14" },
+    // IDM_PERMISSIONS 被注释掉，保持一致
+};
 #define ICONNECTIONS 1  /* Index of the Connections button */
 
 #define TBAR_BITMAP_COUNT 14  /* number of std toolbar bitmaps */
@@ -1176,7 +1200,102 @@ NormalHelp:
    return(0);
 }
 
+VOID CreateFMToolbar0(void)
+{
+    RECT rc;
+    INT xStart;
+    HDC hDC;
+    HFONT hOldFont;
+    TEXTMETRIC TextMetric;
 
+    // === 1. 计算驱动器下拉框尺寸（保持不变）===
+    hDC = GetDC(NULL);
+    xStart = dxButtonSep;  // 假设 dxButtonSep 已按 DPI 缩放
+
+    hOldFont = SelectObject(hDC, hfontDriveList);
+    GetTextMetrics(hDC, &TextMetric);
+
+    cchDriveListMax =
+        (INT)((dxDriveList - MINIDRIVE_WIDTH - 2 * MINIDRIVE_MARGIN) /
+            (TextMetric.tmAveCharWidth * 3 / 2) - 2);
+    dyDriveItem = TextMetric.tmHeight;
+
+    if (hOldFont)
+        SelectObject(hDC, hOldFont);
+    ReleaseDC(NULL, hDC);
+
+    // === 2. 创建纯文本工具栏（不使用任何位图）===
+    // 使用 TOOLBARCLASSNAME 而非 CreateToolbarEx
+    hwndToolbar = CreateWindowEx(
+        0,
+        TOOLBARCLASSNAME,
+        NULL,
+        WS_CHILD | WS_BORDER | CCS_ADJUSTABLE | WS_CLIPSIBLINGS | TBSTYLE_TOOLTIPS |
+        (bToolbar ? WS_VISIBLE : 0),
+        0, 0, 0, 0,
+        hwndFrame,
+        (HMENU)IDC_TOOLBAR,
+        hAppInstance,
+        NULL
+    );
+
+    if (!hwndToolbar)
+        return;
+
+    // 启用工具栏按钮结构
+    SendMessage(hwndToolbar, TB_BUTTONSTRUCTSIZE, sizeof(TBBUTTON), 0);
+
+    // 设置缩进（可选）
+    SendMessage(hwndToolbar, TB_SETINDENT, 8, 0);
+
+    // === 3. 添加纯文本按钮（占位符 "1", "2", "3"）===
+    // 关键：设置 TBSTYLE_AUTOSIZE 以支持文本按钮自动调整宽度
+    DWORD dwStyle = (DWORD)SendMessage(hwndToolbar, TB_GETSTYLE, 0, 0);
+    SendMessage(hwndToolbar, TB_SETSTYLE, 0, dwStyle | TBSTYLE_AUTOSIZE);
+
+    // 添加按钮（注意：iBitmap 设为 I_IMAGENONE 表示无图标）
+    for (int i = 0; i < ARRAYSIZE(tbButtons); ++i) {
+        tbButtons[i].iBitmap = I_IMAGENONE; // ← 关键：禁用位图
+    }
+
+    SendMessage(hwndToolbar, TB_ADDBUTTONS, ARRAYSIZE(tbButtons), (LPARAM)tbButtons);
+
+    // === 4. 主题兼容性（保持不变）===
+    if (bDisableVisualStyles && SetWindowTheme != NULL) {
+        SetWindowTheme(hwndToolbar, pwszInvalidTheme, pwszInvalidTheme);
+    }
+
+    // === 5. 创建驱动器 ComboBox（保持不变）===
+    hwndDriveList = CreateWindow(TEXT("combobox"), NULL,
+        WS_BORDER | WS_CHILD | CBS_DROPDOWNLIST | CBS_OWNERDRAWVARIABLE | WS_VSCROLL,
+        xStart, 0, dxDriveList, dxDriveList,
+        hwndToolbar, (HMENU)IDC_DRIVES, hAppInstance, NULL);
+
+    if (!hwndDriveList) {
+        DestroyWindow(hwndToolbar);
+        hwndToolbar = NULL;
+        return;
+    }
+
+    if (bDisableVisualStyles && SetWindowTheme != NULL) {
+        SetWindowTheme(hwndDriveList, pwszInvalidTheme, pwszInvalidTheme);
+    }
+
+    SendMessage(hwndDriveList, CB_SETEXTENDEDUI, 0, 0L);
+    SendMessage(hwndDriveList, WM_SETFONT, (WPARAM)hfontDriveList, MAKELPARAM(TRUE, 0));
+
+    GetWindowRect(hwndDriveList, &rc);
+    rc.bottom -= rc.top;
+
+    // 注意：dyToolbar 应从工具栏实际高度获取
+    GetClientRect(hwndToolbar, &rc);
+    int dyToolbar = rc.bottom;
+
+    MoveWindow(hwndDriveList, xStart, (dyToolbar - rc.bottom) / 2,
+        dxDriveList, rc.bottom, TRUE);
+
+    ShowWindow(hwndDriveList, SW_SHOW);
+}
 VOID
 CreateFMToolbar(void)
 {
