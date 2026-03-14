@@ -58,7 +58,7 @@ static TBBUTTON tbButtons[] = {
   { 0, 0              , TBSTATE_ENABLED, TBSTYLE_SEP   , 0 },
   { 2, IDM_SHAREAS    , TBSTATE_ENABLED, TBSTYLE_BUTTON, 0 },
 // IDM_STOPSHARE not shown anymore, because there is no way to open then 'Stop Share Dialog' with W7/10/11
-//  { 3, IDM_STOPSHARE  , TBSTATE_ENABLED, TBSTYLE_BUTTON, 0 },
+  //{ 3, IDM_STOPSHARE  , TBSTATE_ENABLED, TBSTYLE_BUTTON, 0 },
   { 0, 0              , TBSTATE_ENABLED, TBSTYLE_SEP   , 0 },
   { 4, IDM_VNAME      , TBSTATE_ENABLED, TBSTYLE_BUTTON, 0 },
   { 5, IDM_VDETAILS   , TBSTATE_ENABLED, TBSTYLE_BUTTON, 0 },
@@ -75,9 +75,10 @@ static TBBUTTON tbButtons[] = {
   {12, IDM_MOVE       , TBSTATE_ENABLED, TBSTYLE_BUTTON, 0 },
   {13, IDM_DELETE     , TBSTATE_ENABLED, TBSTYLE_BUTTON, 0 },
   // IDM_PERMISSIONS not shown anymore, because there is no way to use the old acledit functionality with W7/10/11
-  // { 0, 0              , TBSTATE_ENABLED, TBSTYLE_SEP   , 0 },
-  // {27, IDM_PERMISSIONS, TBSTATE_ENABLED, TBSTYLE_BUTTON, 0 },
+   //{ 0, 0              , TBSTATE_ENABLED, TBSTYLE_SEP   , 0 },
+   //{27, IDM_PERMISSIONS, TBSTATE_ENABLED, TBSTYLE_BUTTON, 0 },
 };
+//static TBBUTTON tbButtons[] = { {13, IDM_DELETE     , TBSTATE_ENABLED, TBSTYLE_BUTTON, 0 } };
 
 #define ICONNECTIONS 1  /* Index of the Connections button */
 
@@ -1244,7 +1245,7 @@ CreateFMToolbar(void)
                (LPARAM) &tbAddBitmap);
 
    GetClientRect(hwndToolbar, &rc);
-   dyToolbar = rc.bottom;
+   //dyToolbar = rc.bottom;
 
    hwndDriveList = CreateWindow(TEXT("combobox"), NULL,
       WS_BORDER | WS_CHILD | CBS_DROPDOWNLIST | CBS_OWNERDRAWVARIABLE | WS_VSCROLL,
@@ -1292,19 +1293,20 @@ VOID
 InitToolbarButtons(VOID)
 {
    INT i;
-   HMENU hMenu;
+   HMENU hMenu3;
    BOOL bLastSep;
 
-   hMenu = GetMenu(hwndFrame);
+   hMenu3 = GetMenu(hwndFrame);
 
    //
    // HACK: Don't show both Connections and Connect/Disconnect in the
    // Customize toolbar dialog.
    //
-   if (GetMenuState(hMenu, IDM_CONNECTIONS, MF_BYCOMMAND) == (UINT)-1)
+   if (GetMenuState(hMenu3, IDM_CONNECTIONS, MF_BYCOMMAND) == (UINT)-1)
       tbButtons[ICONNECTIONS].idCommand = IDM_CONNECT;
 
    for (i=1, bLastSep=TRUE; i<TBAR_BUTTON_COUNT; ++i) {
+       int z = TBAR_BUTTON_COUNT;
       if (tbButtons[i].fsStyle & TBSTYLE_SEP) {
          if (bLastSep)
             tbButtons[i].fsState = TBSTATE_HIDDEN;
@@ -1312,7 +1314,7 @@ InitToolbarButtons(VOID)
 
       } else {
 
-         if (GetMenuState(hMenu, tbButtons[i].idCommand, MF_BYCOMMAND)
+         if (GetMenuState(hMenu3, tbButtons[i].idCommand, MF_BYCOMMAND)
             == (UINT)-1)
 
             tbButtons[i].fsState = TBSTATE_HIDDEN;
@@ -1326,7 +1328,7 @@ InitToolbarButtons(VOID)
       //
       // Set the top bit to indicate that the button should be hidden
       //
-      if (GetMenuState(hMenu, sAllButtons[i].idM, MF_BYCOMMAND) == (UINT)-1)
+      if (GetMenuState(hMenu3, sAllButtons[i].idM, MF_BYCOMMAND) == (UINT)-1)
          sAllButtons[i].idB |= HIDEIT;
    }
 
@@ -1523,6 +1525,7 @@ FreeToolbarExtensions(VOID)
 VOID
 SaveRestoreToolbar(BOOL bSave)
 {
+
    static TCHAR  szSubKey[] = TEXT("Software\\Microsoft\\File Manager\\Settings");
    static TCHAR  szValueName [] = TEXT("ToolbarWindow");
 
@@ -1608,7 +1611,7 @@ SaveRestoreToolbar(BOOL bSave)
       tbSave.pszValueName = szValueName;
       SendMessage(hwndToolbar, TB_SAVERESTORE, 0, (LPARAM)&tbSave);
 
-      bRestored = nCurButtons != (int)SendMessage(hwndToolbar, TB_BUTTONCOUNT, 0, 0L);
+      bRestored = (nCurButtons != (int)SendMessage(hwndToolbar, TB_BUTTONCOUNT, 0, 0L));
 
       if (bRestored) {
          INT idGood, idBad, nItem;

@@ -326,7 +326,8 @@ GetDriveOffset(DRIVE drive)
 
 VOID
 InitMenus()
-{
+{              
+
    HMENU hMenu;
    TCHAR szValue[MAXPATHLEN];
    HMENU hMenuOptions;
@@ -341,6 +342,7 @@ InitMenus()
       InsertMenu(hMenu, 4, MF_BYPOSITION | MF_SEPARATOR, 0, NULL);
 
       LoadString(hAppInstance, IDS_NEWWINONCONNECT, szValue, COUNTOF(szValue));
+      //LoadString(hAppInstance, IDS_NEWWINONCONNECT,TEXT("dassadd"), COUNTOF(TEXT("dassadd")));
       hMenuOptions = GetSubMenu(GetMenu(hwndFrame), 4);
       InsertMenu(hMenuOptions, 8, MF_BYPOSITION | MF_STRING, IDM_NEWWINONCONNECT, szValue);
 
@@ -1019,6 +1021,7 @@ InitFileManager(
    WCHAR         szBuffer[2*MAXPATHLEN];
 
    HCURSOR       hcurArrow;
+   HCURSOR      hcurDebug;
    WNDCLASS      wndClass;
    WINDOW        win;
    HWND          hwnd;
@@ -1237,6 +1240,7 @@ JAPANEND
    hhkMsgFilter = SetWindowsHook(WH_MSGFILTER, MessageFilter);
 
    hcurArrow = LoadCursor(NULL, IDC_ARROW);
+   hcurDebug= LoadCursor(NULL,IDC_CROSS);
 
    wndClass.lpszClassName  = szFrameClass;
    wndClass.style          = 0L;

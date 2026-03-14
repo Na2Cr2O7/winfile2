@@ -10,6 +10,8 @@
 #include "dlgs.h"
 #include "resize.h"
 
+
+
 CANCELDLG DIALOG 77, 27, 160, 65
 STYLE WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 CAPTION "Formatting Disk"

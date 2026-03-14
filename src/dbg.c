@@ -16,12 +16,13 @@
 
 TCHAR szAsrtFmt[] = TEXT("Assertion Failure in %s at %d\n");
 TCHAR szFmt[300];
+
 unsigned long TraceFlags = 
       BF_START
-//     | BF_PROCTRACE
-//     | BF_PARMTRACE
-//     | BF_MSGTRACE
-//     | BF_DEFMSGTRACE
+     | BF_PROCTRACE
+     | BF_PARMTRACE
+     | BF_MSGTRACE
+     | BF_DEFMSGTRACE
     ;     // set these to print on TRACEs
 
 unsigned long BreakFlags = 0

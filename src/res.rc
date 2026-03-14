@@ -85,17 +85,17 @@ BEGIN
 END
 
 // Define version information
-#define VER_FILEDESCRIPTION_STR     "File Manager"
+#define VER_FILEDESCRIPTION_STR     "File Manager11"
 #define VER_INTERNALNAME_STR        "fileman\0"
 #define VER_ORIGINALFILENAME_STR    "WINFILE.EXE"
 #define VER_COMPANYNAME_STR         "Microsoft Corporation"
 #define VER_PRODUCTNAME_STR         "File Manager"
 #define VER_LEGALCOPYRIGHT_STR      "Copyright (c) Microsoft Corporation. All rights reserved."
 
-#define VER_FILEVERSION             10,4,0,0
-#define VER_FILEVERSION_STR         "10.4.0.0\0"
-#define VER_PRODUCTVERSION          10,4,0,0
-#define VER_PRODUCTVERSION_STR      "10.4.0.0\0"
+#define VER_FILEVERSION             10,11111,0,0
+#define VER_FILEVERSION_STR         "10.11111.0.0\0"
+#define VER_PRODUCTVERSION          10,11222,0,0
+#define VER_PRODUCTVERSION_STR      "10.11222.0.0\0"
 
 #ifndef DEBUG
 #define VER_DEBUG                   0
@@ -146,6 +146,8 @@ CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "winfile.exe.manifest"
 
 //Language includes
 #pragma code_page(65001) //UTF-8
+
+
 #include "lang\res_en-US.rc"
 #include "lang\res_zh-CN.rc"
 #include "lang\res_ja-JP.rc"
