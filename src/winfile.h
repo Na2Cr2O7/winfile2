@@ -1357,11 +1357,11 @@ Extern INT   dxClickRect;
 Extern INT   dyClickRect;
 Extern INT   iNumWindows     EQ( 0 );
 
-Extern INT   dyToolbar        EQ( 27 );
+Extern const INT   dyToolbar        EQ( 27 );
 Extern INT   dxButtonSep      EQ( 8 );
 Extern INT   dxButton         EQ( 24 );
-Extern INT   dyButton         EQ( 22 );
-Extern INT   dxDriveList      EQ( 205 );
+Extern const  INT   dyButton         EQ( 22 );
+Extern const INT   dxDriveList      EQ( 205 );
 Extern INT   dyDriveItem      EQ( 17 );
 Extern INT   xFirstButton;
 Extern HFONT hfontDriveList;

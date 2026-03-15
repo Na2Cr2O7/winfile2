@@ -2499,6 +2499,7 @@ Error:
 
 
 
+
 /////////////////////////////////////////////////////////////////////
 //
 // Name:     CompareDTA
@@ -2554,7 +2555,7 @@ CompareDTA(
          ptr1 = GetExtension(MemGetFileName(lpItem1));
          ptr2 = GetExtension(MemGetFileName(lpItem2));
 
-         ret = lstrcmpi(ptr1, ptr2);
+         ret = StrCmpLogicalW(ptr1, ptr2);
 
          if (ret == 0) {
 
@@ -2570,7 +2571,7 @@ CompareDTA(
                ptr2 = NULL;
             }
 
-            ret = lstrcmpi(MemGetFileName(lpItem1), MemGetFileName(lpItem2));
+            ret = StrCmpLogicalW(MemGetFileName(lpItem1), MemGetFileName(lpItem2));
 
             if (ptr1) {
                *ptr1 = CHAR_DOT;
@@ -2638,7 +2639,7 @@ CompareDTA(
    case IDD_NAME:
 
 CompareNames:
-      ret = lstrcmpi(MemGetFileName(lpItem1), MemGetFileName(lpItem2));
+      ret = StrCmpLogicalW(MemGetFileName(lpItem1), MemGetFileName(lpItem2));
       break;
    }
 

@@ -51,7 +51,7 @@ static UINT uExtraCommands[] =
 /* Note that the idsHelp field is used internally to determine if the
  * button is "available" or not.
  */
-static TBBUTTON tbButtons[] = {
+static TBBUTTON tbButtons0[] = {
   { 0, 0              , TBSTATE_ENABLED, TBSTYLE_SEP   , 0 },
   { 0, IDM_CONNECTIONS, TBSTATE_ENABLED, TBSTYLE_BUTTON, 0 },
   { 1, IDM_DISCONNECT , TBSTATE_ENABLED, TBSTYLE_BUTTON, 0 },
@@ -80,7 +80,7 @@ static TBBUTTON tbButtons[] = {
 };
 //static TBBUTTON tbButtons[] = { {13, IDM_DELETE     , TBSTATE_ENABLED, TBSTYLE_BUTTON, 0 } };
     // 注意：必须使用宽字符串 (L"...")
-static TBBUTTON tbButtons0[] = {
+static TBBUTTON tbButtons[] = {
     { I_IMAGENONE, 0,              TBSTATE_ENABLED, TBSTYLE_SEP,   {0}, 0, (INT_PTR)L"" },
     { I_IMAGENONE, IDM_CONNECTIONS, TBSTATE_ENABLED, BTNS_BUTTON,  {0}, 0, (INT_PTR)L"1" },
     { I_IMAGENONE, IDM_DISCONNECT,  TBSTATE_ENABLED, BTNS_BUTTON,  {0}, 0, (INT_PTR)L"2" },
